@@ -6,7 +6,7 @@ const db = new pg.Client({
   user: "postgres",
   host: "localhost",
   database: "world",
-  password: "",
+  password: "123456",
   port: 5432,
 });
 
@@ -15,17 +15,12 @@ const port = 3000;
 
 db.connect();
 
-let quiz = [
-  { country: "France", capital: "Paris" },
-  { country: "United Kingdom", capital: "London" },
-  { country: "United States of America", capital: "New York" },
-];
-
-db.query("SELECT * FROM captials", (err, res)=>{
+let quiz = [];
+db.query("SELECT * FROM flags", (err, res) => {
   if (err) {
-    console.error("Error Executing Query", err.stack);
+    console.error("Error executing query", err.stack);
   } else {
-    quiz= res.rows;
+    quiz = res.rows;
   }
   db.end();
 });
@@ -50,7 +45,7 @@ app.get("/", async (req, res) => {
 app.post("/submit", (req, res) => {
   let answer = req.body.answer.trim();
   let isCorrect = false;
-  if (currentQuestion.capital.toLowerCase() === answer.toLowerCase()) {
+  if (currentQuestion.name.toLowerCase() === answer.toLowerCase()) {
     totalCorrect++;
     console.log(totalCorrect);
     isCorrect = true;
