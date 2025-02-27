@@ -375,10 +375,11 @@
   </h2>
   <script>
     const country_codes = "<%= countries %>".split(",");
-    console.log(country_codes);
-    console.log(typeof ("<%= countries %>"));
+    console.log("Array country codes: " + country_codes);
+    console.log("Read the type: " + typeof (country_codes));
     country_codes.forEach(code => {
-      document.getElementById(code).style.fill="teal";
+      document.getElementById(code).style.fill="red";
+      console.log("country code itrate:" + code);
     });
   </script>
 </body>
