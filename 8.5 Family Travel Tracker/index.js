@@ -36,23 +36,18 @@ async function checkVisisted() {
 
 async function getCurrentUser() {
   const result = await db.query("SELECT * FROM users");
-  console.log("User list: " + result.rows);
-  result.rows.forEach(user => {
-    user.id, 
-    user.name,
-    user.color
-  });
+  users = result.rows;
+  return users.find(user=>user.id == currentUserId);
 }
-
-getCurrentUser();
 
 app.get("/", async (req, res) => {
   const countries = await checkVisisted();
+  const currentUser = await getCurrentUser();
   res.render("index.ejs", {
     countries: countries,
     total: countries.length,
     users: users,
-    color: "teal",
+    color: currentUser.color
   });
 });
 app.post("/add", async (req, res) => {
